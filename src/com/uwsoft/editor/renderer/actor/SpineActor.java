@@ -96,7 +96,7 @@ public class SpineActor extends Actor implements IBaseItem {
         long time = System.currentTimeMillis();
         skeletonJson = new SkeletonJson(essentials.rm.getSkeletonAtlas(dataVO.animationName));
         skeletonData = skeletonJson.readSkeletonData((essentials.rm.getSkeletonJSON(dataVO.animationName)));
-        Gdx.app.log("initSkeletonData", String.valueOf(System.currentTimeMillis() - time));
+        //Gdx.app.log("initSkeletonData", String.valueOf(System.currentTimeMillis() - time));
     }
 
     private void initSpine() {
