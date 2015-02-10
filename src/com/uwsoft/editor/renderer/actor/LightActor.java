@@ -199,7 +199,7 @@ public class LightActor extends Actor implements IBaseItem{
 	public void updateDataVO() {
 		dataVO.distance = (int) lightObject.getDistance()/this.mulX/PhysicsBodyLoader.SCALE;
 		
-		System.out.println("dataVO.distance = " + dataVO.distance);
+		//System.out.println("dataVO.distance = " + dataVO.distance);
 		
 		dataVO.directionDegree = direction;
 
