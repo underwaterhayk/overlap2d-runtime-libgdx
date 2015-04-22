@@ -38,6 +38,7 @@ public class LabelItem extends Label implements IBaseItem {
     public LabelItem(LabelVO vo, Essentials e) {
         //super(vo.text, rm.getSkin(), vo.style.isEmpty()?"default":vo.style);
         super(vo.text, generateStyle(e.rm, vo.style, vo.size));
+
         dataVO = vo;
         this.essentials = e;
         setX(dataVO.x);
@@ -67,7 +68,6 @@ public class LabelItem extends Label implements IBaseItem {
     }
 
     private static LabelStyle generateStyle(IResourceRetriever rManager, String fontName, int size) {
-
         if (size == 0) {
             size = labelDefaultSize;
         }
