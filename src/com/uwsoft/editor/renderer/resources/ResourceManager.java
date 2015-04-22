@@ -278,6 +278,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
 
     @Override
     public void loadFonts() {
+        System.out.println("1: "+bitmapFonts.size());
     	//resolution related stuff
     	ResolutionEntryVO curResolution = getProjectVO().getResolution(packResolutionName);
         resMultiplier = 1;
@@ -290,15 +291,35 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     	}
     	
         // empty existing ones that are not scheduled to load
-        for (FontSizePair pair : bitmapFonts.keySet()) {
+
+//        Iterator it = bitmapFonts.entrySet().iterator();
+//        while (it.hasNext()) {
+//            Map.Entry pair = (Map.Entry)it.next();
+//            System.out.println(pair.getKey() + " = " + pair.getValue());
+//            it.remove(); // avoids a ConcurrentModificationException
+//        }
+
+
+        Iterator<FontSizePair> it =  bitmapFonts.keySet().iterator();
+        while(it.hasNext()){
+            FontSizePair pair   =  it.next();
+            System.out.println(":::"+pair.toString());
             if (!fontsToLoad.contains(pair)) {
-                bitmapFonts.remove(pair);
+                it.remove();
             }
         }
+        System.out.println("2: "+bitmapFonts.size());
+//        for (FontSizePair pair : bitmapFonts.keySet()) {
+//            if (!fontsToLoad.contains(pair)) {
+//                bitmapFonts.remove(pair);
+//            }
+//        }
 
         for (FontSizePair pair : fontsToLoad) {
+            System.out.println(":::"+pair.toString());
             loadFont(pair);
         }
+        System.out.println("3: "+bitmapFonts.size());
     }
 
     public void loadFont(FontSizePair pair) {
