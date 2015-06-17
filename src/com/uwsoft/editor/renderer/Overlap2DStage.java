@@ -2,9 +2,8 @@ package com.uwsoft.editor.renderer;
 
 
 import box2dLight.RayHandler;
-
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -39,7 +38,7 @@ public class Overlap2DStage extends Stage {
 	}
 	
 	public Overlap2DStage(Viewport viewPort) {		
-		super(viewPort);
+		super(viewPort, new PolygonSpriteBatch());
 		initStage();
 	}
 
