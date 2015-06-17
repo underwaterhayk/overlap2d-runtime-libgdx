@@ -1,8 +1,6 @@
 package com.uwsoft.editor.renderer.actor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -46,6 +44,7 @@ public class SpriterActor extends Actor implements IBaseItem {
     private ArrayList<String> entities = new ArrayList<String>();
     private int currentEntityIndex	=	0;
     private int currentAnimationIndex;
+	private LibGdxLoader loader;
 
     public SpriterActor(SpriterVO vo, Essentials e, CompositeItem parent) {
         this(vo, e);
@@ -76,7 +75,7 @@ public class SpriterActor extends Actor implements IBaseItem {
 
         FileHandle handle 	=	essentials.rm.getSCMLFile(dataVO.animationName);
         data 			= 	new SCMLReader(handle.read()).getData();		
-		LibGdxLoader loader = 	new LibGdxLoader(data);
+		loader = 	new LibGdxLoader(data);
 		loader.load(handle.file());
 		ShapeRenderer renderer	=	new ShapeRenderer();
 		drawer = new LibGdxDrawer(loader, renderer);
@@ -239,8 +238,7 @@ public class SpriterActor extends Actor implements IBaseItem {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		loader.dispose();		
 	}
 
 	public ArrayList<String> getAnimations() {		
@@ -254,8 +252,7 @@ public class SpriterActor extends Actor implements IBaseItem {
 
 	public void setAnimation(int i) {
 		currentAnimationIndex	=	i;
-	 	updateDataVO();
-		initPlayer();
+        	player.setAnimation(i);
 	}
 	public void setEntity(int i) {
 		currentEntityIndex	=	i;	
