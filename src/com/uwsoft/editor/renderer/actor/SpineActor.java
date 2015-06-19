@@ -1,14 +1,16 @@
 package com.uwsoft.editor.renderer.actor;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.*;
 import com.esotericsoftware.spine.attachments.Attachment;
+import com.esotericsoftware.spine.attachments.MeshAttachment;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
+import com.esotericsoftware.spine.attachments.SkinnedMeshAttachment;
 import com.uwsoft.editor.renderer.data.Essentials;
 import com.uwsoft.editor.renderer.data.SpineVO;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
@@ -76,20 +78,35 @@ public class SpineActor extends Actor implements IBaseItem {
             Slot slot = skeleton.getSlots().get(i);
             Attachment attachment = slot.getAttachment();
             if (attachment == null) continue;
-            if (!(attachment instanceof RegionAttachment)) continue;
-            RegionAttachment imageRegion = (RegionAttachment) attachment;
-            imageRegion.updateWorldVertices(slot, false);
-            float[] vertices = imageRegion.getWorldVertices();
-            for (int ii = 0, nn = vertices.length; ii < nn; ii += 5) {
-                minX = Math.min(minX, vertices[ii]);
-                minY = Math.min(minY, vertices[ii + 1]);
-                maxX = Math.max(maxX, vertices[ii]);
-                maxY = Math.max(maxY, vertices[ii + 1]);
+            float[] vertices = null;
+            if (attachment instanceof RegionAttachment) {
+                RegionAttachment imageRegion = (RegionAttachment) attachment;
+                imageRegion.updateWorldVertices(slot, false);
+                vertices = imageRegion.getWorldVertices();
+            }
+            if (attachment instanceof MeshAttachment) {
+                MeshAttachment imageRegion = (MeshAttachment) attachment;
+                imageRegion.updateWorldVertices(slot, false);
+                vertices = imageRegion.getWorldVertices();
+            }
+            if (attachment instanceof SkinnedMeshAttachment) {
+                SkinnedMeshAttachment imageRegion = (SkinnedMeshAttachment) attachment;
+                imageRegion.updateWorldVertices(slot, false);
+                vertices = imageRegion.getWorldVertices();
+            }
+            if(vertices != null) {
+                for (int ii = 0, nn = vertices.length; ii < nn; ii += 5) {
+                    minX = Math.min(minX, vertices[ii]);
+                    minY = Math.min(minY, vertices[ii + 1]);
+                    maxX = Math.max(maxX, vertices[ii]);
+                    maxY = Math.max(maxY, vertices[ii + 1]);
+                }
             }
         }
 
         setWidth(maxX - minX);
         setHeight(maxY - minY);
+
     }
 
     private void initSkeletonData() {
@@ -100,7 +117,7 @@ public class SpineActor extends Actor implements IBaseItem {
     }
 
     private void initSpine() {
-        BoneData root = skeletonData.findBone("root");
+        BoneData root = skeletonData.getBones().get(0); // this has to be the root bone.
         root.setScale(dataVO.scaleX * mulX, dataVO.scaleX * mulX);
         skeleton = new Skeleton(skeletonData); // Skeleton holds skeleton state (bone positions, slot attachments, etc).
         AnimationStateData stateData = new AnimationStateData(skeletonData); // Defines mixing (crossfading) between animations.
@@ -141,7 +158,7 @@ public class SpineActor extends Actor implements IBaseItem {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        renderer.draw(batch, skeleton);
+        renderer.draw((PolygonSpriteBatch)batch, skeleton);
         super.draw(batch, parentAlpha);
     }
 
