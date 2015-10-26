@@ -59,8 +59,8 @@ public class LabelItem extends Label implements IBaseItem {
 
 
 
-        if(dataVO.width == 0) dataVO.width = getTextBounds().x / this.mulX;
-        if(dataVO.height == 0) dataVO.height = getTextBounds().y / this.mulY;
+        if(dataVO.width == 0) dataVO.width = getGlyphLayout().width / this.mulX;
+        if(dataVO.height == 0) dataVO.height = getGlyphLayout().height / this.mulY;
 
         renew();
     }
@@ -98,8 +98,9 @@ public class LabelItem extends Label implements IBaseItem {
             fontName = dataVO.style;
             fontSize = dataVO.size;
 
-            if(dataVO.width == 0) dataVO.width = getTextBounds().x / this.mulX;
-            if(dataVO.height == 0) dataVO.height = getTextBounds().y / this.mulY;
+            layout();
+            if(dataVO.width == 0) dataVO.width = getGlyphLayout().width / this.mulX;
+            if(dataVO.height == 0) dataVO.height = getGlyphLayout().height / this.mulY;
         }
 
         setText(dataVO.text);
