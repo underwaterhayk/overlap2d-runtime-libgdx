@@ -89,8 +89,8 @@ public class SpineActor extends Actor implements IBaseItem {
                 imageRegion.updateWorldVertices(slot, false);
                 vertices = imageRegion.getWorldVertices();
             }
-            if (attachment instanceof SkinnedMeshAttachment) {
-                SkinnedMeshAttachment imageRegion = (SkinnedMeshAttachment) attachment;
+            if (attachment instanceof WeightedMeshAttachment) {
+                WeightedMeshAttachment imageRegion = (WeightedMeshAttachment) attachment;
                 imageRegion.updateWorldVertices(slot, false);
                 vertices = imageRegion.getWorldVertices();
             }
