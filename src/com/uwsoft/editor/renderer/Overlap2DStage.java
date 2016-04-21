@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.esotericsoftware.spine.SkeletonMeshRenderer;
 import com.esotericsoftware.spine.SkeletonRenderer;
 import com.uwsoft.editor.renderer.data.Essentials;
 import com.uwsoft.editor.renderer.data.SceneVO;
@@ -48,7 +49,7 @@ public class Overlap2DStage extends Stage {
      */
 	protected void initStage() {
 		essentials = new Essentials();
-		essentials.skeletonRenderer = new SkeletonRenderer();
+		essentials.skeletonRenderer = new SkeletonMeshRenderer();
 		initLightsConfiguration();
 	}
 

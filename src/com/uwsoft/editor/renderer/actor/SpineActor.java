@@ -26,7 +26,7 @@ public class SpineActor extends Actor implements IBaseItem {
     protected int layerIndex = 0;
     private boolean isLockedByLayer = false;
     private CompositeItem parentItem = null;
-    private SkeletonRenderer renderer;
+    private SkeletonMeshRenderer renderer;
     private Skeleton skeleton;
     private AnimationState state;
     private Essentials essentials;
